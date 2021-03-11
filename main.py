@@ -146,6 +146,7 @@ class Calculator:
             index += 1
 
     def evaluate(self, equation):
+        termslist = []
         termslist = self.find_terms(termslist, equation)
         answer = self.solve_equation(termslist)
         return answer
