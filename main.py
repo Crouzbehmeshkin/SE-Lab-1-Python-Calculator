@@ -35,7 +35,20 @@ class Calculator:
         return 0
 
     def find_terms(self, termslist, equation):
-        return []
+        index = 0
+        while equation is not None:
+            if len(equation) == index:
+                termslist.append(equation[:index])
+                return termslist
+            if equation[index] == '*' or equation[index] == "/" or equation[index] == "+" or equation[index] == "-":
+                if index == 0:
+                    termslist.append(equation[index])
+                    equation = equation[(index+1):]
+                else:
+                    termslist.append(equation[:index])
+                    equation = equation[index:]
+                index = -1
+            index += 1
 
     def evaluate(self, equation):
         termslist = []
