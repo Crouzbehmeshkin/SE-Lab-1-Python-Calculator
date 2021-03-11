@@ -14,6 +14,13 @@ class Calculator:
 
         # initialize screen value as empty
         self.equation = ''
+    
+    def clear_screen(self):
+        # to clear screen
+        # set equation to empty before deleting screen
+        self.equation = ''
+        self.screen.configure(state='normal')
+        self.screen.delete('1.0', END)
 
 
 root = Tk()
