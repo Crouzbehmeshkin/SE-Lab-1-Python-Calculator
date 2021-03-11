@@ -21,6 +21,13 @@ class Calculator:
         self.equation = ''
         self.screen.configure(state='normal')
         self.screen.delete('1.0', END)
+    
+    def insert_screen(self, value, newline=False):
+        self.screen.configure(state='normal')
+        self.screen.insert(END, value)
+        # record every value inserted in screen
+        self.equation += str(value)
+        self.screen.configure(state='disabled')
 
 
 root = Tk()
