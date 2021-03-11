@@ -16,6 +16,10 @@ class Calculator:
         # initialize screen value as empty
         self.equation = ''
     
+    def create_button(self, val, write=True, width=7):
+        # this function creates a button, and takes one compulsory argument, the value that should be on the button
+        return Button(self.master, text=val, command=lambda: self.click(val, write), width=width)
+    
     def click(self, text, write):
         # this function handles what happens when you click a button
         # 'write' argument if True means the value 'val' should be written on screen,
