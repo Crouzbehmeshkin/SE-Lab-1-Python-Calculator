@@ -15,7 +15,28 @@ class Calculator:
 
         # initialize screen value as empty
         self.equation = ''
-
+    
+    def click(self, text, write):
+        # this function handles what happens when you click a button
+        # 'write' argument if True means the value 'val' should be written on screen,
+        # if None, should not be written on screen
+        if self.equation_evaluated:
+            self.clear_screen()
+        self. equation_evaluated = False
+        if write is None:
+            # only evaluate code when there is an equation to be evaluated
+            if text == '=' and self.equation:
+                # replace the unicode value of division ./. with python division symbol / using regex
+                self.equation = re.sub(u"\u00F7", '/', self.equation)
+                answer = self.evaluate(self.equation)
+                self.clear_screen()
+                self.insert_screen(answer, newline=True)
+                self. equation_evaluated = True
+            elif text == u"\u232B":
+                self.clear_screen()
+        else:
+            # add text to screen
+            self.insert_screen(text)
 
     def clear_screen(self):
         # to clear screen
