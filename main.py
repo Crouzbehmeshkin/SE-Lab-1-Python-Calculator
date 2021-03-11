@@ -14,7 +14,8 @@ class Calculator:
 
         # initialize screen value as empty
         self.equation = ''
-    
+
+
     def clear_screen(self):
         # to clear screen
         # set equation to empty before deleting screen
@@ -28,6 +29,19 @@ class Calculator:
         # record every value inserted in screen
         self.equation += str(value)
         self.screen.configure(state='disabled')
+
+
+    def solve_equation(self, termslist):
+        return 0
+
+    def find_terms(self, termslist, equation):
+        return []
+
+    def evaluate(self, equation):
+        termslist = []
+        termslist = self.find_terms(termslist, equation)
+        answer = self.solve_equation(termslist)
+        return answer
 
 
 root = Tk()
