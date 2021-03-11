@@ -2,6 +2,12 @@ from tkinter import *
 from decimal import Decimal
 
 class Calculator:
+    MULT_SIGN = 'x'
+    DOT_SIGN = '.'
+    ADD_SIGN = '+'
+    SUB_SIGN = '-'
+    EQUAL_SIGN = '='
+
     def __init__(self, master):
         self.master = master
         master.title("Python Calculator")
@@ -29,12 +35,12 @@ class Calculator:
         b9 = self.create_button(7)
         b10 = self.create_button(8)
         b11 = self.create_button(9)
-        b12 = self.create_button('x')
-        b13 = self.create_button('.')
+        b12 = self.create_button(Calculator.MULT_SIGN)
+        b13 = self.create_button(Calculator.DOT_SIGN)
         b14 = self.create_button(0)
-        b15 = self.create_button('+')
-        b16 = self.create_button('-')
-        b17 = self.create_button('=', None, 34)
+        b15 = self.create_button(Calculator.ADD_SIGN)
+        b16 = self.create_button(Calculator.SUB_SIGN)
+        b17 = self.create_button(Calculator.EQUAL_SIGN, None, 34)
 
         # buttons stored in list
         buttons = [b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15, b16, b17]
@@ -62,7 +68,7 @@ class Calculator:
         self. equation_evaluated = False
         if write is None:
             # only evaluate code when there is an equation to be evaluated
-            if text == '=' and self.equation:
+            if text == Calculator.EQUAL_SIGN and self.equation:
                 # replace the unicode value of division ./. with python division symbol / using regex
                 self.equation = re.sub(u"\u00F7", '/', self.equation)
                 answer = self.evaluate(self.equation)
@@ -94,8 +100,8 @@ class Calculator:
         newlist = []
         index = 0
         while index < len(termslist):
-            if termslist[index] == '*' or termslist[index] == '/':
-                if termslist[index] == '*':
+            if termslist[index] == Calculator.MULT_SIGN or termslist[index] == '/':
+                if termslist[index] == Calculator.MULT_SIGN:
                     newlist.append(Decimal(newlist.pop()) * Decimal(termslist[index+1]))
                     index += 1
                 if termslist[index] == '/':
@@ -108,11 +114,11 @@ class Calculator:
         finallist = []
         index = 0
         while index < len(newlist):
-            if newlist[index] == '+' or newlist[index] == '-':
-                if newlist[index] == '+':
+            if newlist[index] == Calculator.ADD_SIGN or newlist[index] == Calculator.SUB_SIGN:
+                if newlist[index] == Calculator.ADD_SIGN:
                     finallist.append(Decimal(finallist.pop()) + Decimal(newlist[index+1]))
                     index += 1
-                if newlist[index] == '-':
+                if newlist[index] == Calculator.SUB_SIGN:
                     finallist.append(Decimal(finallist.pop()) - Decimal(newlist[index + 1]))
                     index += 1
             else:
@@ -129,7 +135,7 @@ class Calculator:
             if len(equation) == index:
                 termslist.append(equation[:index])
                 return termslist
-            if equation[index] == '*' or equation[index] == "/" or equation[index] == "+" or equation[index] == "-":
+            if equation[index] == Calculator.MULT_SIGN or equation[index] == "/" or equation[index] == Calculator.ADD_SIGN or equation[index] == Calculator.SUB_SIGN:
                 if index == 0:
                     termslist.append(equation[index])
                     equation = equation[(index+1):]
@@ -140,7 +146,6 @@ class Calculator:
             index += 1
 
     def evaluate(self, equation):
-        termslist = []
         termslist = self.find_terms(termslist, equation)
         answer = self.solve_equation(termslist)
         return answer
