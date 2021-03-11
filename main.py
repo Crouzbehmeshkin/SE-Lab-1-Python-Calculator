@@ -1,4 +1,5 @@
 from tkinter import *
+from decimal import Decimal
 
 class Calculator:
     def __init__(self, master):
@@ -32,7 +33,38 @@ class Calculator:
 
 
     def solve_equation(self, termslist):
-        return 0
+        newlist = []
+        index = 0
+        while index < len(termslist):
+            if termslist[index] == '*' or termslist[index] == '/':
+                if termslist[index] == '*':
+                    newlist.append(Decimal(newlist.pop()) * Decimal(termslist[index+1]))
+                    index += 1
+                if termslist[index] == '/':
+                    newlist.append(Decimal(newlist.pop()) / Decimal(termslist[index + 1]))
+                    index += 1
+            else:
+                newlist.append(termslist[index])
+            index += 1
+        
+        finallist = []
+        index = 0
+        while index < len(newlist):
+            if newlist[index] == '+' or newlist[index] == '-':
+                if newlist[index] == '+':
+                    finallist.append(Decimal(finallist.pop()) + Decimal(newlist[index+1]))
+                    index += 1
+                if newlist[index] == '-':
+                    finallist.append(Decimal(finallist.pop()) - Decimal(newlist[index + 1]))
+                    index += 1
+            else:
+                finallist.append(newlist[index])
+            index += 1
+        if len(finallist) != 1:
+            return self.solve_equation(finallist)
+        else:
+            return str(finallist[0])
+
 
     def find_terms(self, termslist, equation):
         return []
